@@ -1,53 +1,36 @@
 <!-- src/App.svelte -->
 <script>
-  import { onMount } from "svelte";
-  let count = 0;
-  onMount(() => {
-    const interval = setInterval(() => count++, 1000);
-    return () => {
-      clearInterval(interval);
-    };
-  });
+  import popularIcons from "./data/popular-icons.js";
+  import IconCard from "./IconCard.svelte";
+
+  let inputColor;
+
+  function colorChange(event) {
+    inputColor = event.target.value.slice(1);
+  }
+
+  /*  new ClipboardJS(".icon-list", {
+    target: function (trigger) {
+      console.log(trigger);
+      return trigger.closest(".icon-card");
+    },
+  }); */
 </script>
 
-<div class="App">
-  <header class="App-header">
-    <img src="/logo.svg" class="App-logo" alt="logo" />
-    <p>Page has been open for <code>{count}</code> seconds.</p>
-    <a
-      class="App-link"
-      href="https://svelte.dev"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Learn Svelte
-    </a>
-  </header>
-</div>
+<header>
+  <label for="icon-search">Search coming soon!</label>
+  <input type="search" id="icon-search" />
+  <input type="color" id="icon-color" on:change={colorChange} />
+</header>
+<section class="icon-list">
+  {#each popularIcons as title}
+    <IconCard iconTitle={title} iconColor={inputColor} />
+  {/each}
+</section>
 
 <style>
-  .App-header {
-    background-color: #f9f6f6;
-    color: #333;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-  }
-  .App-logo {
-    height: 36vmin;
-    pointer-events: none;
-    margin-bottom: 3rem;
-    animation: App-logo-pulse infinite 1.6s ease-in-out alternate;
-  }
-  @keyframes App-logo-pulse {
-    from {
-      transform: scale(1);
-    }
-    to {
-      transform: scale(1.06);
-    }
+  .icon-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 </style>
