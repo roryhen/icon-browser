@@ -1,36 +1,48 @@
 <!-- src/App.svelte -->
 <script>
-  import popularIcons from "./data/popular-icons.js";
   import IconCard from "./IconCard.svelte";
+  import ClipboardJS from "clipboard";
 
-  let inputColor;
-
-  function colorChange(event) {
-    inputColor = event.target.value.slice(1);
-  }
-
-  /*  new ClipboardJS(".icon-list", {
-    target: function (trigger) {
-      console.log(trigger);
-      return trigger.closest(".icon-card");
+  let clipboard = new ClipboardJS(".icon-card", {
+    text: function (trigger) {
+      let button = trigger.closest("button");
+      return button.querySelector("img").getAttribute("src");
     },
-  }); */
+  });
+
+  clipboard.on("success", function (e) {
+    e.trigger.classList.add("tooltip");
+    setTimeout(() => {
+      e.trigger.classList.remove("tooltip");
+    }, 4000);
+  });
+
+  async function getIconList() {
+    return fetch("https://material-icons.github.io/material-icons/data.json")
+      .then((res) => res.json())
+      .then((data) => data.icons);
+  }
+  let iconList = getIconList();
 </script>
 
 <header>
-  <label for="icon-search">Search coming soon!</label>
-  <input type="search" id="icon-search" />
-  <input type="color" id="icon-color" on:change={colorChange} />
+  <!-- <label for="icon-search">Search coming soon!</label>
+  <input type="search" id="icon-search" /> -->
 </header>
-<section class="icon-list">
-  {#each popularIcons as title}
-    <IconCard iconTitle={title} iconColor={inputColor} />
-  {/each}
-</section>
+
+{#await iconList then list}
+  <section class="icon-list">
+    {#each list as { name }}
+      <IconCard iconName={name} />
+    {/each}
+  </section>
+{/await}
 
 <style>
   .icon-list {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(4, min-content);
+    gap: 1em;
+    justify-content: center;
   }
 </style>
