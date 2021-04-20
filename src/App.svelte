@@ -18,11 +18,12 @@
   });
 
   async function getIconList() {
-    return fetch("https://material-icons.github.io/material-icons/data.json")
+    return fetch("/icons/data.json")
       .then((res) => res.json())
-      .then((data) => data.icons);
+      .then((data) => console.log(data));
   }
-  let iconList = getIconList();
+  getIconList();
+  let iconList = [];
 </script>
 
 <header>
