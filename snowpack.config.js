@@ -20,7 +20,7 @@ module.exports = {
   },
   packageOptions: {
     /* Enable streaming imports */
-    "source": "remote"
+    // "source": "remote"
   },
   devOptions: {
     /* ... */
