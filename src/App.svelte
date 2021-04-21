@@ -17,24 +17,65 @@
     }, 4000);
   });
 
-  async function getIconList() {
-    return fetch("/icons/data.json")
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+  let currentIconSet = 'materialicons';
+  let isDarkTheme = false;
+  $: currentTheme = isDarkTheme ? 'dark' : 'light';
+  $: if (isDarkTheme) {
+    document.body.classList.add('dark')
+  } else {
+    document.body.classList.remove('dark')
   }
-  getIconList();
-  let iconList = [];
+
+  async function getIconProps() {
+    const res = await fetch("/icons/data.json");
+    const json = await res.json();
+    const [dir, stats] = await json;
+    let icons = dir.contents.flatMap(cats => {
+      return cats.contents.map(icon => {
+        return {
+          theme: 'light',
+          category: cats.name,
+          iconName: icon.name,
+          iconSet: icon.contents
+        }
+      });
+    })
+    return icons
+  }
+
+  async function getIconPropsText() {
+    const res = await fetch("/icons/data.txt");
+    const text = await res.text();
+    return text.trim().split('\n').slice(0,80).map(line => {
+      let dirs = line.split('/');
+      return {
+          category: dirs[1],
+          iconName: dirs[2],
+          iconSet: dirs[3]
+        }
+    });
+  }
+  
+  let iconProps = getIconPropsText();
 </script>
 
 <header>
   <!-- <label for="icon-search">Search coming soon!</label>
   <input type="search" id="icon-search" /> -->
+  <label for="theme-switch">Light/Dark</label>
+  <input type="checkbox" id="theme-switch" bind:checked={isDarkTheme}>
 </header>
 
-{#await iconList then list}
+{#await iconProps then props}
   <section class="icon-list">
-    {#each list as { name }}
-      <IconCard iconName={name} />
+    {#each props as {category, iconName, iconSet}}
+      <IconCard 
+      theme={currentTheme} 
+      category={category} 
+      iconName={iconName} 
+      iconSet={iconSet} 
+      currentSet={currentIconSet} 
+      />
     {/each}
   </section>
 {/await}
@@ -46,4 +87,12 @@
     gap: 1em;
     justify-content: center;
   }
+  :global(body) {
+    background-color: rgb(238 238 238);
+		color: rgb(0 0 0 / 0.5);
+  }
+  :global(body.dark) {
+		background-color: rgb(51 51 51);
+		color: rgb(255 255 255 / 0.9);
+	}
 </style>

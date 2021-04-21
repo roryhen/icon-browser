@@ -1,20 +1,27 @@
 <script>
+    export let theme;
+    export let category;
     export let iconName;
+    export let iconSet;
+    export let currentSet;
+
+    let baseUrl = document.location.origin
+
     let tooltip;
-    let formattedName = iconName
-        .replaceAll("_", " ")
-        .replace(/\b\w/g, (letter) => letter.toUpperCase());
+    let formattedName = iconName.replaceAll("_", " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 </script>
 
+{#if iconSet === currentSet}
 <button class="icon-card" class:tooltip>
     <img
-        src="https://material-icons.github.io/material-icons/svg/{iconName}/baseline.svg"
+        src="{baseUrl}/icons/{theme}/{category}/{iconName}/{iconSet}/24px.svg"
         alt="{formattedName} icon"
         width="48"
         height="48"
     />
     <h3>{formattedName}</h3>
 </button>
+{/if}
 
 <style>
     button {
@@ -25,7 +32,6 @@
         border-radius: 2em;
         background: none;
         outline: none;
-        color: rgb(0 0 0 / 0.5);
         font-family: "IBM Plex Mono", Helvetica, Arial, sans-serif;
     }
 
@@ -44,6 +50,10 @@
     h3 {
         margin: 1em 0 0.2em;
         font-size: 1em;
+    }
+
+    :global(body.dark) h3 {
+        color: rgb(255 255 255 / 0.9);
     }
 
     .tooltip::before {
