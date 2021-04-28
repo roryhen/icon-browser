@@ -111,11 +111,11 @@
 		color: rgb(255 255 255 / 0.9);
 	}
 
-  :global(body.dark) :is(.main, .section) {
+  :global(body.dark .main, body.dark .section) {
 		background-color: rgb(51 51 51);
   }
 
-  :global(body.dark) :is(h1, h2, h3) {
+  :global(body.dark h1, body.dark h2, body.dark h3) {
 		color: rgb(255 255 255 / 0.9);
   }
 </style>
