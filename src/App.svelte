@@ -96,7 +96,7 @@
 
   .icon-list {
     display: grid;
-    grid-template-columns: repeat( auto-fit, minmax(8em, 1fr) );
+    grid-template-columns: repeat( auto-fit, minmax(9em, 1fr) );
     gap: 1em;
     justify-content: center;
   }
@@ -105,9 +105,17 @@
     background-color: rgb(238 238 238);
 		color: rgb(0 0 0 / 0.5);
   }
-  
+
   :global(body.dark) {
 		background-color: rgb(51 51 51);
 		color: rgb(255 255 255 / 0.9);
 	}
+
+  :global(body.dark) :is(.main, .section) {
+		background-color: rgb(51 51 51);
+  }
+
+  :global(body.dark) :is(h1, h2, h3) {
+		color: rgb(255 255 255 / 0.9);
+  }
 </style>

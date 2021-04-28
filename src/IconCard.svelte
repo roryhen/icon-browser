@@ -47,7 +47,10 @@
 
     h3 {
         margin: 1em 0 0.2em;
+        line-height: 1.5;
+        font-family: inherit;
         font-size: 1em;
+        font-weight: 400;
     }
 
     :global(body.dark) h3 {
