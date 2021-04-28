@@ -16,11 +16,11 @@ module.exports = {
     /* Example: Bundle your final build: */
     "bundle": true,
     "minify": true,
-    "target": "es2017"
+    "target": "es2018"
   },
   packageOptions: {
     /* Enable streaming imports */
-    "source": "remote"
+    // "source": "remote"
   },
   devOptions: {
     /* ... */

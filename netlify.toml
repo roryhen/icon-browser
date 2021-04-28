@@ -1,4 +1,5 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    Access-Control-Allow-Origin = "https://design-flow.io"
+    Access-Control-Allow-Origin = "*"
+    Vary = "Origin"
