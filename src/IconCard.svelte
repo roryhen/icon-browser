@@ -4,11 +4,10 @@
     export let iconName;
     export let iconSet;
     export let currentSet;
-
-    let baseUrl = document.location.origin
+    export let baseUrl = document.location.origin;
 
     let tooltip;
-    let formattedName = iconName.replaceAll("_", " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
+    let formattedName = iconName.replace(/_/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 </script>
 
 {#if iconSet === currentSet}
@@ -27,7 +26,6 @@
     button {
         position: relative;
         padding: 2em 1em;
-        width: 9em;
         border: 1px solid rgb(0 0 0 / 0.3);
         border-radius: 2em;
         background: none;
@@ -36,7 +34,7 @@
     }
 
     button:focus {
-        border-color: rgb(0 0 250 / 0.3);
+        border-color: rgb(0 150 250 / 0.6);
     }
 
     button:hover {

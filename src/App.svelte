@@ -4,6 +4,8 @@
   import SlideToggle from "./SlideToggle.svelte";
   import ClipboardJS from "clipboard";
 
+  const HOST = "https://lucid-heyrovsky-a6ebcb.netlify.app/";
+
   let clipboard = new ClipboardJS(".icon-card", {
     text: function (trigger) {
       let button = trigger.closest("button");
@@ -45,9 +47,9 @@
   } */
 
   async function getIconPropsText() {
-    const res = await fetch("/icons/data.txt");
+    const res = await fetch(`${HOST}/icons/data.txt`);
     const text = await res.text();
-    return text.trim().split('\n').slice(0,80).map(line => {
+    return text.trim().split('\n').map(line => {
       let dirs = line.split('/');
       return {
           category: dirs[1],
@@ -79,6 +81,7 @@
       iconName={iconName} 
       iconSet={iconSet} 
       currentSet={currentIconSet} 
+      baseUrl={HOST}
       />
     {/each}
   </section>
@@ -90,16 +93,19 @@
     justify-content: center;
     margin-bottom: 1em;
   }
+
   .icon-list {
     display: grid;
-    grid-template-columns: repeat(4, min-content);
+    grid-template-columns: repeat( auto-fit, minmax(8em, 1fr) );
     gap: 1em;
     justify-content: center;
   }
+
   :global(body) {
     background-color: rgb(238 238 238);
 		color: rgb(0 0 0 / 0.5);
   }
+  
   :global(body.dark) {
 		background-color: rgb(51 51 51);
 		color: rgb(255 255 255 / 0.9);
