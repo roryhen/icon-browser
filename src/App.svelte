@@ -1,6 +1,7 @@
 <!-- src/App.svelte -->
 <script>
   import IconCard from "./IconCard.svelte";
+  import SlideToggle from "./SlideToggle.svelte";
   import ClipboardJS from "clipboard";
 
   let clipboard = new ClipboardJS(".icon-card", {
@@ -26,7 +27,7 @@
     document.body.classList.remove('dark')
   }
 
-  async function getIconProps() {
+/*   async function getIconProps() {
     const res = await fetch("/icons/data.json");
     const json = await res.json();
     const [dir, stats] = await json;
@@ -41,7 +42,7 @@
       });
     })
     return icons
-  }
+  } */
 
   async function getIconPropsText() {
     const res = await fetch("/icons/data.txt");
@@ -55,15 +56,18 @@
         }
     });
   }
-  
+
+  function toggleTheme(e) {
+    isDarkTheme = !isDarkTheme;
+  }
+
   let iconProps = getIconPropsText();
 </script>
 
 <header>
   <!-- <label for="icon-search">Search coming soon!</label>
   <input type="search" id="icon-search" /> -->
-  <label for="theme-switch">Light/Dark</label>
-  <input type="checkbox" id="theme-switch" bind:checked={isDarkTheme}>
+  <SlideToggle toggleOn={isDarkTheme} on:click="{toggleTheme}" />
 </header>
 
 {#await iconProps then props}
@@ -81,6 +85,11 @@
 {/await}
 
 <style>
+  header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1em;
+  }
   .icon-list {
     display: grid;
     grid-template-columns: repeat(4, min-content);
