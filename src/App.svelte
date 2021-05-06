@@ -2,9 +2,20 @@
 <script>
   import IconCard from "./IconCard.svelte";
   import SlideToggle from "./SlideToggle.svelte";
+  import Search from "./Search.svelte";
+  import IconSets from "./IconSets.svelte";
   import ClipboardJS from "clipboard";
+  import { onMount } from "svelte";
 
-  const HOST = "https://lucid-heyrovsky-a6ebcb.netlify.app/";
+  const HOST = "https://icons.design-flow.io";
+
+  let currentIconSet = "materialiconsoutlined";
+  let isDarkTheme = false;
+  let searchTerm = "";
+  let iconProps = [];
+  $: filteredIcons = iconProps.filter((icon) => {
+    return icon.iconName.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   let clipboard = new ClipboardJS(".icon-card", {
     text: function (trigger) {
@@ -20,102 +31,64 @@
     }, 4000);
   });
 
-  let currentIconSet = 'materialicons';
-  let isDarkTheme = false;
-  $: currentTheme = isDarkTheme ? 'dark' : 'light';
-  $: if (isDarkTheme) {
-    document.body.classList.add('dark')
-  } else {
-    document.body.classList.remove('dark')
-  }
-
-/*   async function getIconProps() {
-    const res = await fetch("/icons/data.json");
-    const json = await res.json();
-    const [dir, stats] = await json;
-    let icons = dir.contents.flatMap(cats => {
-      return cats.contents.map(icon => {
-        return {
-          theme: 'light',
-          category: cats.name,
-          iconName: icon.name,
-          iconSet: icon.contents
-        }
-      });
-    })
-    return icons
-  } */
-
-  async function getIconPropsText() {
-    const res = await fetch(`${HOST}/icons/data.txt`);
-    const text = await res.text();
-    return text.trim().split('\n').map(line => {
-      let dirs = line.split('/');
-      return {
-          category: dirs[1],
-          iconName: dirs[2],
-          iconSet: dirs[3]
-        }
-    });
-  }
-
   function toggleTheme(e) {
     isDarkTheme = !isDarkTheme;
+    document.body.classList.toggle("dark");
   }
 
-  let iconProps = getIconPropsText();
+  onMount(async () => {
+    const res = await fetch(`${HOST}/icons/data.txt`);
+    const text = await res.text();
+    let index = 0;
+    iconProps = text
+      .trim()
+      .split("\n")
+      .map((line) => {
+        let dirs = line.split("/");
+        return {
+          id: index++,
+          category: dirs[1],
+          iconName: dirs[2],
+          iconSet: dirs[3],
+        };
+      });
+  });
 </script>
 
-<header>
-  <!-- <label for="icon-search">Search coming soon!</label>
-  <input type="search" id="icon-search" /> -->
-  <SlideToggle toggleOn={isDarkTheme} on:click="{toggleTheme}" />
-</header>
+{#if iconProps}
+  <header>
+    <Search bind:searchTerm />
+    <IconSets bind:currentIconSet />
+    <SlideToggle toggleOn={isDarkTheme} on:click={toggleTheme} />
+  </header>
 
-{#await iconProps then props}
   <section class="icon-list">
-    {#each props as {category, iconName, iconSet}}
-      <IconCard 
-      theme={currentTheme} 
-      category={category} 
-      iconName={iconName} 
-      iconSet={iconSet} 
-      currentSet={currentIconSet} 
-      baseUrl={HOST}
+    {#each filteredIcons as iconData (iconData.id)}
+      <IconCard
+        theme={isDarkTheme ? "dark" : "light"}
+        {...iconData}
+        currentSet={currentIconSet}
+        baseUrl={HOST}
       />
     {/each}
   </section>
-{/await}
+{:else}
+  <p style="text-align: center;">Loading...</p>
+{/if}
 
 <style>
   header {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-flow: column nowrap;
+    gap: 1em;
     margin-bottom: 1em;
   }
 
   .icon-list {
     display: grid;
-    grid-template-columns: repeat( auto-fit, minmax(9em, 1fr) );
-    gap: 1em;
+    grid-template-columns: repeat(auto-fit, minmax(8em, 1fr));
+    gap: 1.2em;
     justify-content: center;
-  }
-
-  :global(body) {
-    background-color: rgb(238 238 238);
-		color: rgb(0 0 0 / 0.5);
-  }
-
-  :global(body.dark) {
-		background-color: rgb(51 51 51);
-		color: rgb(255 255 255 / 0.9);
-	}
-
-  :global(body.dark .main, body.dark .section) {
-		background-color: rgb(51 51 51);
-  }
-
-  :global(body.dark h1, body.dark h2, body.dark h3) {
-		color: rgb(255 255 255 / 0.9);
   }
 </style>

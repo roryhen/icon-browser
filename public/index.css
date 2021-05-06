@@ -1,4 +1,29 @@
 /* Add CSS styles here! */
+:root {
+  --text-color: rgb(0 0 0 / 0.5);
+  --bg-color: rgb(247 247 247);
+}
+
 body {
-  font-family: 'IBM Plex Mono', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: "IBM Plex Mono", sans-serif;
+}
+
+.dark {
+  --bg-color: rgb(51 51 51);
+  --text-color: rgb(255 255 255 / 0.9);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.dark .main,
+.dark .section {
+  background-color: var(--bg-color);
+}
+
+.dark h1,
+.dark h2,
+.dark h3 {
+  color: var(--text-color);
 }
