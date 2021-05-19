@@ -31,9 +31,8 @@
 <style>
   button {
     position: relative;
-    padding: 2em 1em;
-    border: 1px solid rgb(0 0 0 / 0.3);
-    border-radius: 2em;
+    padding: 1.2em 1em;
+    border: none;
     background: none;
     outline: none;
     font-family: "IBM Plex Mono", Helvetica, Arial, sans-serif;

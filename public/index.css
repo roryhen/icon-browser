@@ -27,3 +27,9 @@ body {
 .dark h3 {
   color: var(--text-color);
 }
+
+.navigation header {
+  position: sticky;
+  top: 89px;
+  z-index: 1;
+}

@@ -9,7 +9,7 @@
 
   const HOST = "https://icons.design-flow.io";
 
-  let currentIconSet = "materialiconsoutlined";
+  let currentIconSet;
   let isDarkTheme = false;
   let searchTerm = "";
   let iconProps = [];
@@ -66,7 +66,9 @@
     {#each filteredIcons as iconData (iconData.id)}
       <IconCard
         theme={isDarkTheme ? "dark" : "light"}
-        {...iconData}
+        category={iconData.category}
+        iconName={iconData.iconName}
+        iconSet={iconData.iconSet}
         currentSet={currentIconSet}
         baseUrl={HOST}
       />

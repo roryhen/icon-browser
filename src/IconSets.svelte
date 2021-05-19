@@ -1,5 +1,5 @@
 <script>
-  export let currentIconSet;
+  export let currentIconSet = "materialiconsoutlined";
 
   export let iconSets = [
     {
@@ -33,3 +33,10 @@
     </label>
   {/each}
 </section>
+
+<style>
+  .icon-sets {
+    display: flex;
+    gap: 1em;
+  }
+</style>

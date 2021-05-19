@@ -14,8 +14,7 @@
 <style>
   input {
     padding: 0.6em 0.9em;
-    min-width: 100%;
-    max-width: 20em;
+    width: 100%;
     border: 1px solid rgb(0 0 0 / 0.3);
     outline: none;
     font-family: inherit;
