@@ -1,7 +1,7 @@
 <!-- src/App.svelte -->
 <script>
   import IconCard from "./IconCard.svelte";
-  import SlideToggle from "./SlideToggle.svelte";
+  import Toggle from "./Toggle.svelte";
   import Search from "./Search.svelte";
   import IconSets from "./IconSets.svelte";
   import ClipboardJS from "clipboard";
@@ -59,7 +59,7 @@
   <header>
     <Search bind:searchTerm />
     <IconSets bind:currentIconSet />
-    <SlideToggle toggleOn={isDarkTheme} on:click={toggleTheme} />
+    <Toggle toggleOn={isDarkTheme} on:click={toggleTheme} />
   </header>
 
   <section class="icon-list">
@@ -82,15 +82,22 @@
   header {
     display: flex;
     align-items: center;
-    flex-flow: column nowrap;
-    gap: 1em;
-    margin-bottom: 1em;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    gap: 0.7em;
+    margin-bottom: 0.9em;
   }
 
   .icon-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(8em, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(7em, 1fr));
     gap: 1.2em;
     justify-content: center;
+  }
+
+  :global(.navigation) header {
+    position: sticky;
+    top: 89px;
+    z-index: 1;
   }
 </style>
