@@ -29,11 +29,11 @@
 ./maps/directions_walk/materialiconssharp/24px.svg
 ./maps/directions_walk/materialicons/24px.svg
 ./maps/directions_walk/materialiconstwotone/24px.svg
-./maps/miscellaneous_services/materialiconsoutlined/24px.svg
-./maps/miscellaneous_services/materialiconsround/24px.svg
-./maps/miscellaneous_services/materialiconssharp/24px.svg
-./maps/miscellaneous_services/materialicons/24px.svg
-./maps/miscellaneous_services/materialiconstwotone/24px.svg
+./maps/misc_services/materialiconsoutlined/24px.svg
+./maps/misc_services/materialiconsround/24px.svg
+./maps/misc_services/materialiconssharp/24px.svg
+./maps/misc_services/materialicons/24px.svg
+./maps/misc_services/materialiconstwotone/24px.svg
 ./maps/wrong_location/materialiconsoutlined/24px.svg
 ./maps/wrong_location/materialiconsround/24px.svg
 ./maps/wrong_location/materialiconssharp/24px.svg
