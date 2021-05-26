@@ -39,7 +39,7 @@
   }
 
   button:focus {
-    border-color: rgb(0 150 250 / 0.6);
+    outline: rgb(0 150 250 / 0.6) solid 1px;
   }
 
   button:hover {
@@ -48,6 +48,14 @@
 
   button:active {
     background: rgb(0 0 0 / 0.06);
+  }
+
+  :global(body.dark) button:hover {
+    background: rgb(255 255 255 / 0.03);
+  }
+
+  :global(body.dark) button:active {
+    background: rgb(255 255 255 / 0.06);
   }
 
   h3 {

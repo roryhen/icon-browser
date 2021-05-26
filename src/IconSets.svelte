@@ -53,6 +53,8 @@
     transition: background-color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
       color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     white-space: nowrap;
+    font-size: 1em;
+    line-height: 1.1;
   }
 
   label:hover {
