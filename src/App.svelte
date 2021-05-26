@@ -55,7 +55,7 @@
   });
 </script>
 
-{#if iconProps}
+{#if iconProps.length}
   <header>
     <Search bind:searchTerm />
     <IconSets bind:currentIconSet />
@@ -72,10 +72,12 @@
         currentSet={currentIconSet}
         baseUrl={HOST}
       />
+    {:else}
+      <p class="message">No results found!</p>
     {/each}
   </section>
 {:else}
-  <p style="text-align: center;">Loading...</p>
+  <p class="loading">Loading...</p>
 {/if}
 
 <style>
@@ -93,6 +95,13 @@
     grid-template-columns: repeat(auto-fit, minmax(7em, 1fr));
     gap: 1.2em;
     justify-content: center;
+  }
+
+  .loading,
+  .message {
+    font-weight: 700;
+    text-align: center;
+    font-size: 1.3em;
   }
 
   :global(.navigation) header {
