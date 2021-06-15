@@ -1,81 +1,104 @@
 <!-- src/App.svelte -->
 <script>
-  import IconCard from "./IconCard.svelte";
-  import Toggle from "./Toggle.svelte";
-  import Search from "./Search.svelte";
-  import IconSets from "./IconSets.svelte";
   import ClipboardJS from "clipboard";
   import { onMount } from "svelte";
+  // import { paginate, PaginationNav } from "svelte-paginate";
+  import { icons } from "./stores.js";
+  import IconCard from "./IconCard.svelte";
+  import Search from "./Search.svelte";
+  import RadioSet from "./RadioSet.svelte";
 
-  const HOST = "https://icons.design-flow.io";
+  let baseUrl = "https://icons.design-flow.io";
 
-  let currentIconSet;
-  let isDarkTheme = false;
   let searchTerm = "";
-  let iconProps = [];
-  $: filteredIcons = iconProps.filter((icon) => {
+  $: filteredIcons = $icons.filter((icon) => {
     return icon.iconName.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
-  let clipboard = new ClipboardJS(".icon-card", {
-    text: function (trigger) {
-      let button = trigger.closest("button");
-      return button.querySelector("img").getAttribute("src");
+  let currentPage = 1;
+  let pageSize = 100;
+  let paginatedItems;
+  // $: paginatedItems = paginate({ filteredIcons, pageSize, currentPage });
+
+  onMount(() => {
+    let clipboard = new ClipboardJS(".icon-card");
+
+    clipboard.on("success", function (e) {
+      e.trigger.classList.add("tooltip");
+      setTimeout(() => {
+        e.trigger.classList.remove("tooltip");
+      }, 4000);
+    });
+  });
+
+  let iconSets = [
+    {
+      name: "Filled",
+      slug: "materialicons",
     },
-  });
+    {
+      name: "Outlined",
+      slug: "materialiconsoutlined",
+    },
+    {
+      name: "Round",
+      slug: "materialiconsround",
+    },
+    {
+      name: "Sharp",
+      slug: "materialiconssharp",
+    },
+    {
+      name: "Two tone",
+      slug: "materialiconstwotone",
+    },
+  ];
 
-  clipboard.on("success", function (e) {
-    e.trigger.classList.add("tooltip");
-    setTimeout(() => {
-      e.trigger.classList.remove("tooltip");
-    }, 4000);
-  });
-
-  function toggleTheme(e) {
-    isDarkTheme = !isDarkTheme;
-    document.body.classList.toggle("dark");
+  $: if (currentSet === "materialiconstwotone") {
+    currentTheme = "light";
   }
 
-  onMount(async () => {
-    const res = await fetch(`${HOST}/icons/data.txt`);
-    const text = await res.text();
-    let index = 0;
-    iconProps = text
-      .trim()
-      .split("\n")
-      .map((line) => {
-        let dirs = line.split("/");
-        return {
-          id: index++,
-          category: dirs[1],
-          iconName: dirs[2],
-          iconSet: dirs[3],
-        };
-      });
-  });
+  let themes = [
+    { name: "Light", slug: "light" },
+    { name: "Dark", slug: "dark" },
+    { name: "Blue", slug: "blue" },
+    { name: "Red", slug: "red" },
+  ];
+
+  let currentSet = "materialiconsoutlined";
+  let currentTheme = "light";
 </script>
 
-{#if iconProps.length}
+{#if $icons.length}
   <header>
     <Search bind:searchTerm />
-    <IconSets bind:currentIconSet />
-    <Toggle toggleOn={isDarkTheme} on:click={toggleTheme} />
+    <RadioSet bind:selected={currentSet} sets={iconSets} />
+    <RadioSet bind:selected={currentTheme} sets={themes} />
   </header>
 
   <section class="icon-list">
     {#each filteredIcons as iconData (iconData.id)}
       <IconCard
-        theme={isDarkTheme ? "dark" : "light"}
+        {currentTheme}
+        {currentSet}
+        {baseUrl}
         category={iconData.category}
         iconName={iconData.iconName}
         iconSet={iconData.iconSet}
-        currentSet={currentIconSet}
-        baseUrl={HOST}
       />
     {:else}
       <p class="message">No results found!</p>
     {/each}
   </section>
+
+  <!-- <PaginationNav
+    totalItems={filteredIcons.length}
+    {pageSize}
+    {currentPage}
+    limit={1}
+    showStepOptions={true}
+    on:setPage={(e) => (currentPage = e.detail.page)}
+  /> -->
 {:else}
   <p class="loading">Loading...</p>
 {/if}

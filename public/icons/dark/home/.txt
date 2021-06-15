@@ -1,1 +1,0 @@
-sensor_door sensor_window

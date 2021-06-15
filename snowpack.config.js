@@ -12,6 +12,7 @@ module.exports = {
     /* Enable an SPA Fallback in development: */
     // {"match": "routes", "src": ".*", "dest": "/index.html"},
   ],
+  // exclude: ['**/node_modules/**', './public/icons/**'],
   optimize: {
     /* Example: Bundle your final build: */
     "bundle": true,
@@ -20,7 +21,7 @@ module.exports = {
   },
   packageOptions: {
     /* Enable streaming imports */
-    "source": "remote-next"
+    // "source": "remote-next"
   },
   devOptions: {
     /* ... */

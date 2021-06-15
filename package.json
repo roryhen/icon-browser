@@ -5,10 +5,13 @@
     "test": "echo \"This template does not include a test runner by default.\" && exit 1"
   },
   "devDependencies": {
-    "@snowpack/plugin-svelte": "^3.6.1",
-    "prettier": "^2.2.1",
-    "prettier-plugin-svelte": "^2.2.0",
-    "snowpack": "^3.3.7"
+    "@snowpack/plugin-svelte": "^3.7.0",
+    "graceful-fs": "^4.2.6",
+    "netlify-cli": "^2.37.0",
+    "prettier": "^2.3.0",
+    "prettier-plugin-svelte": "^2.3.0",
+    "snowpack": "^3.5.2",
+    "svelte-paginate": "^0.0.1"
   },
   "dependencies": {
     "clipboard": "^2.0.8",

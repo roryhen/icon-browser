@@ -2,28 +2,47 @@
 <script>
   import { fade } from "svelte/transition";
 
-  export let theme;
+  export let currentTheme;
+  export let currentSet;
+  export let baseUrl;
+
   export let category;
   export let iconName;
   export let iconSet;
-  export let currentSet;
-  export let baseUrl = document.location.origin;
+
+  let withDashes = {
+    materialicons: "material-icons",
+    materialiconsoutlined: "material-icons-outlined",
+    materialiconsround: "material-icons-round",
+    materialiconssharp: "material-icons-sharp",
+    materialiconstwotone: "material-icons-two-tone",
+  };
 
   let tooltip;
   let formattedName = iconName
     .replace(/_/g, " ")
     .replace(/\b\w/g, (letter) => letter.toUpperCase());
+  $: iconSlug = `${baseUrl}/icons/${currentTheme}/${category}/${iconName}/${iconSet}/24px.svg`;
+
+  $: if (currentTheme) {
+    document.body.classList.remove("dark", "blue", "red");
+    switch (currentTheme) {
+      case "dark":
+        document.body.classList.add("dark");
+        break;
+      case "blue":
+        document.body.classList.add("blue");
+        break;
+      case "red":
+        document.body.classList.add("red");
+        break;
+    }
+  }
 </script>
 
 {#if iconSet === currentSet}
-  <button class="icon-card" class:tooltip transition:fade>
-    <img
-      src="{baseUrl}/icons/{theme}/{category}/{iconName}/{iconSet}/24px.svg"
-      alt="{formattedName} icon"
-      width="48"
-      height="48"
-      loading="lazy"
-    />
+  <button class="icon-card" class:tooltip data-clipboard-text={iconSlug}>
+    <span class={withDashes[currentSet]}>{iconName}</span>
     <h3>{formattedName}</h3>
   </button>
 {/if}
@@ -48,6 +67,23 @@
 
   button:active {
     background: rgb(0 0 0 / 0.06);
+  }
+
+  span {
+    font-size: 3rem;
+    color: var(--icon-color);
+  }
+
+  :global(body.dark) button {
+    --icon-color: #e7e9ec;
+  }
+
+  :global(body.blue) button {
+    --icon-color: #133df6;
+  }
+
+  :global(body.red) button {
+    --icon-color: #ff331f;
   }
 
   :global(body.dark) button:hover {
