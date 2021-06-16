@@ -70,6 +70,9 @@
     background: transparent;
     border: 1px solid #999;
   }
+  .pages button:hover {
+    background-color: rgb(255 255 255 / 0.03);
+  }
   .pages button.active {
     color: #0075fe;
     border-color: #0075fe;
@@ -80,7 +83,11 @@
     color: orange;
     font-weight: bold;
   }
-  .active + button {
+  .pages .active + button {
     border-left-color: #0075fe;
+  }
+  :global(body.dark) button {
+    color: var(--text-color);
+    border-color: var(--text-color);
   }
 </style>
