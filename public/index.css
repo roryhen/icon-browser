@@ -1,11 +1,15 @@
 /* Add CSS styles here! */
+/*
+light mode icon: #000000
+dark mode icon: #e7e9ec
+blue icon: #133df6
+red icon: #ff331f
+*/
+
 :root {
   --text-color: rgb(0 0 0 / 0.5);
   --bg-color: rgb(247 247 247);
   --icon-color: #000000;
-  --icon-white: #e7e9ec;
-  --icon-red: #ff331f;
-  --icon-blue: #133df6;
 }
 
 body {

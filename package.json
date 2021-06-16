@@ -7,13 +7,14 @@
   "devDependencies": {
     "@snowpack/plugin-svelte": "^3.7.0",
     "graceful-fs": "^4.2.6",
-    "netlify-cli": "^2.37.0",
-    "prettier": "^2.3.0",
+    "netlify-cli": "^2.71.0",
+    "prettier": "^2.3.1",
     "prettier-plugin-svelte": "^2.3.0",
-    "snowpack": "^3.5.2",
+    "snowpack": "^3.5.7",
     "svelte-paginate": "^0.0.1"
   },
   "dependencies": {
+    "@sveltejs/svelte-virtual-list": "^3.0.1",
     "clipboard": "^2.0.8",
     "svelte": "^3.38.2"
   }

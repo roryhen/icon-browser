@@ -1,3 +1,4 @@
+<!-- src/RadioSet.svelte -->
 <script>
   export let sets;
   export let selected;

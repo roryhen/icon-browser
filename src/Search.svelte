@@ -10,6 +10,7 @@
     id="icon-search"
     bind:value={searchTerm}
     placeholder="Search for an icon..."
+    on:input
   />
 </div>
 

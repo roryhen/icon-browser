@@ -2,23 +2,22 @@
 <script>
   import ClipboardJS from "clipboard";
   import { onMount } from "svelte";
-  // import { paginate, PaginationNav } from "svelte-paginate";
   import { icons } from "./stores.js";
   import IconCard from "./IconCard.svelte";
   import Search from "./Search.svelte";
   import RadioSet from "./RadioSet.svelte";
+  import Paginate from "./Paginate.svelte";
 
-  let baseUrl = "https://icons.design-flow.io";
+  // let baseUrl = "https://icons.design-flow.io";
+  let baseUrl = "https://storage.googleapis.com/g-icons";
 
   let searchTerm = "";
   $: filteredIcons = $icons.filter((icon) => {
-    return icon.iconName.toLowerCase().includes(searchTerm.toLowerCase());
+    return (
+      icon.iconName.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      icon.iconSet === currentSet
+    );
   });
-
-  let currentPage = 1;
-  let pageSize = 100;
-  let paginatedItems;
-  // $: paginatedItems = paginate({ filteredIcons, pageSize, currentPage });
 
   onMount(() => {
     let clipboard = new ClipboardJS(".icon-card");
@@ -67,38 +66,34 @@
 
   let currentSet = "materialiconsoutlined";
   let currentTheme = "light";
+  let currentPage;
+
+  function updatePage() {
+    currentPage = 1;
+  }
 </script>
 
 {#if $icons.length}
   <header>
-    <Search bind:searchTerm />
+    <Search bind:searchTerm on:input={updatePage} />
     <RadioSet bind:selected={currentSet} sets={iconSets} />
     <RadioSet bind:selected={currentTheme} sets={themes} />
   </header>
 
-  <section class="icon-list">
-    {#each filteredIcons as iconData (iconData.id)}
+  {#if filteredIcons.length}
+    <Paginate items={filteredIcons} {currentPage} let:item>
       <IconCard
         {currentTheme}
         {currentSet}
         {baseUrl}
-        category={iconData.category}
-        iconName={iconData.iconName}
-        iconSet={iconData.iconSet}
+        category={item.category}
+        iconName={item.iconName}
+        iconSet={item.iconSet}
       />
-    {:else}
-      <p class="message">No results found!</p>
-    {/each}
-  </section>
-
-  <!-- <PaginationNav
-    totalItems={filteredIcons.length}
-    {pageSize}
-    {currentPage}
-    limit={1}
-    showStepOptions={true}
-    on:setPage={(e) => (currentPage = e.detail.page)}
-  /> -->
+    </Paginate>
+  {:else}
+    <p class="message">No results found!</p>
+  {/if}
 {:else}
   <p class="loading">Loading...</p>
 {/if}
@@ -111,13 +106,6 @@
     justify-content: space-between;
     gap: 0.7em;
     margin-bottom: 0.9em;
-  }
-
-  .icon-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(7em, 1fr));
-    gap: 1.2em;
-    justify-content: center;
   }
 
   .loading,

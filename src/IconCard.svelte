@@ -1,7 +1,5 @@
 <!-- src/IconCard.svelte -->
 <script>
-  import { fade } from "svelte/transition";
-
   export let currentTheme;
   export let currentSet;
   export let baseUrl;
@@ -22,7 +20,7 @@
   let formattedName = iconName
     .replace(/_/g, " ")
     .replace(/\b\w/g, (letter) => letter.toUpperCase());
-  $: iconSlug = `${baseUrl}/icons/${currentTheme}/${category}/${iconName}/${iconSet}/24px.svg`;
+  $: iconSlug = `${baseUrl}/${currentTheme}/${category}/${iconName}/${iconSet}/24px.svg`;
 
   $: if (currentTheme) {
     document.body.classList.remove("dark", "blue", "red");
@@ -40,12 +38,10 @@
   }
 </script>
 
-{#if iconSet === currentSet}
-  <button class="icon-card" class:tooltip data-clipboard-text={iconSlug}>
-    <span class={withDashes[currentSet]}>{iconName}</span>
-    <h3>{formattedName}</h3>
-  </button>
-{/if}
+<button class="icon-card" class:tooltip data-clipboard-text={iconSlug}>
+  <span class={withDashes[currentSet]}>{iconName}</span>
+  <h3>{formattedName}</h3>
+</button>
 
 <style>
   button {
