@@ -7,11 +7,50 @@
   import Search from "./Search.svelte";
   import RadioSet from "./RadioSet.svelte";
   import Paginate from "./Paginate.svelte";
+  import Spinner from "./Spinner.svelte";
 
-  // let baseUrl = "https://icons.design-flow.io";
-  let baseUrl = "https://storage.googleapis.com/g-icons";
-
+  let baseUrl = "/icons";
+  let currentSet = "materialiconsoutlined";
+  let currentTheme = "light";
+  let currentPage;
   let searchTerm = "";
+
+  let iconSets = [
+    { name: "Filled", slug: "materialicons" },
+    { name: "Outlined", slug: "materialiconsoutlined" },
+    { name: "Round", slug: "materialiconsround" },
+    { name: "Sharp", slug: "materialiconssharp" },
+  ];
+
+  let themes = [
+    { name: "Light", slug: "light" },
+    { name: "Dark", slug: "dark" },
+    { name: "Blue", slug: "blue" },
+    { name: "Red", slug: "red" },
+  ];
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  function shuffle(array) {
+    filteredIcons = shuffleArray(array);
+  }
+
+  function updatePage() {
+    currentPage = 1;
+  }
+
+  if (__SNOWPACK_ENV__.MODE === "development") {
+    baseUrl = __SNOWPACK_ENV__.STORAGE_URL;
+  } else if (process.env.STORAGE_URL) {
+    baseUrl = process.env.STORAGE_URL;
+  }
+
   $: filteredIcons = $icons.filter((icon) => {
     return (
       icon.iconName.toLowerCase().includes(searchTerm.toLowerCase()) &&
@@ -29,55 +68,19 @@
       }, 4000);
     });
   });
-
-  let iconSets = [
-    {
-      name: "Filled",
-      slug: "materialicons",
-    },
-    {
-      name: "Outlined",
-      slug: "materialiconsoutlined",
-    },
-    {
-      name: "Round",
-      slug: "materialiconsround",
-    },
-    {
-      name: "Sharp",
-      slug: "materialiconssharp",
-    },
-    {
-      name: "Two tone",
-      slug: "materialiconstwotone",
-    },
-  ];
-
-  $: if (currentSet === "materialiconstwotone") {
-    currentTheme = "light";
-  }
-
-  let themes = [
-    { name: "Light", slug: "light" },
-    { name: "Dark", slug: "dark" },
-    { name: "Blue", slug: "blue" },
-    { name: "Red", slug: "red" },
-  ];
-
-  let currentSet = "materialiconsoutlined";
-  let currentTheme = "light";
-  let currentPage;
-
-  function updatePage() {
-    currentPage = 1;
-  }
 </script>
+
+<h1>ICON BROWSER</h1>
+<p class="instructions">Tap/Click an icon below to get a shareable URL</p>
 
 {#if $icons.length}
   <header>
     <Search bind:searchTerm on:input={updatePage} />
-    <RadioSet bind:selected={currentSet} sets={iconSets} />
-    <RadioSet bind:selected={currentTheme} sets={themes} />
+    <RadioSet bind:selected={currentSet} sets={iconSets} title={"Style"} />
+    <RadioSet bind:selected={currentTheme} sets={themes} title={"Theme"} />
+    <button class="button" on:click={shuffle(filteredIcons)}
+      ><span class="material-icons-outlined">shuffle</span></button
+    >
   </header>
 
   {#if filteredIcons.length}
@@ -95,29 +98,51 @@
     <p class="message">No results found!</p>
   {/if}
 {:else}
-  <p class="loading">Loading...</p>
+  <p class="loading"><Spinner /></p>
 {/if}
 
 <style>
-  header {
-    display: flex;
-    align-items: center;
-    flex-flow: row wrap;
-    justify-content: space-between;
-    gap: 0.7em;
-    margin-bottom: 0.9em;
+  h1 {
+    text-align: center;
+    margin: var(--size-6) 0 0;
   }
 
-  .loading,
+  .instructions {
+    text-align: center;
+    font-size: var(--font-size-0);
+    margin: 0 0 var(--size-4);
+    opacity: 0.6;
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: center;
+    gap: var(--size-2);
+    padding: var(--size-3);
+    background: var(--bg-color);
+    border-bottom: var(--light-border);
+    margin-bottom: var(--size-5);
+    z-index: 1;
+  }
+
+  button {
+    width: 43px;
+    height: 43px;
+    padding: var(--size-2);
+  }
+
+  button > span {
+    font-size: var(--font-size-4);
+  }
+
   .message {
     font-weight: 700;
     text-align: center;
-    font-size: 1.3em;
-  }
-
-  :global(.navigation) header {
-    position: sticky;
-    top: 89px;
-    z-index: 1;
+    font-size: var(--font-size-4);
+    margin: var(--size-4) 0;
   }
 </style>

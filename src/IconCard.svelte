@@ -46,23 +46,27 @@
 <style>
   button {
     position: relative;
-    padding: 1.2em 1em;
-    border: none;
-    background: none;
-    outline: none;
-    font-family: "IBM Plex Mono", Helvetica, Arial, sans-serif;
+    padding: 2em 1em;
+    border-radius: var(--radius-4);
+    border: 0;
   }
 
   button:focus {
-    outline: rgb(0 150 250 / 0.6) solid 1px;
+    outline: var(--accent-border);
   }
 
   button:hover {
-    background: rgb(0 0 0 / 0.03);
+    background-color: var(--gray-1);
   }
 
   button:active {
-    background: rgb(0 0 0 / 0.06);
+    background-color: var(--gray-3);
+  }
+
+  h3 {
+    margin: 2rem 0 0;
+    font-weight: var(--font-weight-3);
+    font-size: var(--font-size-0);
   }
 
   span {
@@ -70,32 +74,28 @@
     color: var(--icon-color);
   }
 
-  :global(body.dark) button {
-    --icon-color: #e7e9ec;
+  button {
+    --icon-color: var(--gray-7);
   }
 
-  :global(body.blue) button {
-    --icon-color: #133df6;
+  :global(.dark) button {
+    --icon-color: var(--gray-3);
   }
 
-  :global(body.red) button {
-    --icon-color: #ff331f;
+  :global(.dark) button:hover {
+    background-color: rgb(255 255 255 / 0.05);
   }
 
-  :global(body.dark) button:hover {
-    background: rgb(255 255 255 / 0.03);
+  :global(.dark) button:active {
+    background-color: rgb(255 255 255 / 0.09);
   }
 
-  :global(body.dark) button:active {
-    background: rgb(255 255 255 / 0.06);
+  :global(.blue) button {
+    --icon-color: var(--blue-8);
   }
 
-  h3 {
-    margin: 1em 0 0.2em;
-    line-height: 1.5;
-    font-family: inherit;
-    font-size: 0.9em;
-    font-weight: 400;
+  :global(.red) button {
+    --icon-color: var(--red-8);
   }
 
   .tooltip::before {
@@ -104,11 +104,10 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #d7e6fc;
-    padding: 0.5em 1.3em;
-    border-radius: 2em;
-    font-size: 1em;
-    color: #0075fe;
+    padding: var(--size-2) var(--size-3);
+    border-radius: var(--radius-round);
+    background-color: var(--accent-color-light);
+    color: var(--accent-color);
     pointer-events: none;
     animation: 0.5s ease-out 1.5s 1 forwards fadeOut;
   }

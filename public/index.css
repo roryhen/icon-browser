@@ -7,29 +7,91 @@ red icon: #ff331f
 */
 
 :root {
-  --text-color: rgb(0 0 0 / 0.5);
-  --bg-color: rgb(247 247 247);
-  --icon-color: #000000;
+  --text-color: var(--gray-7);
+  --bg-color: var(--gray-0);
+  --accent-color: var(--blue-5);
+  --accent-color-light: var(--blue-1);
+  --accent-border: var(--border-size-1) solid var(--accent-color);
+  --light-border: var(--border-size-1) solid var(--gray-3);
+}
+
+.dark {
+  color-scheme: dark;
+
+  --bg-color: var(--gray-7);
+  --text-color: var(--gray-0);
+  --accent-color: var(--blue-3);
+  --accent-color-light: var(--gray-8);
+  --light-border: var(--border-size-1) solid var(--gray-6);
 }
 
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
-  font-family: "IBM Plex Mono", sans-serif;
+  font-family: "Outfit", var(--font-sans);
+  letter-spacing: var(--font-letterspacing-2);
+  margin: 0;
 }
 
-.dark {
-  --bg-color: #2f3437;
-  --text-color: rgb(255 255 255 / 0.9);
-}
-
-.dark .main,
-.dark .section {
-  background-color: var(--bg-color);
-}
-
-.dark h1,
-.dark h2,
-.dark h3 {
+button,
+[type="button"],
+[type="text"],
+[type="search"],
+textarea,
+select {
+  font: inherit;
+  border-radius: var(--radius-round);
   color: var(--text-color);
+}
+
+button,
+[type="button"] {
+  background: none;
+  outline: none;
+}
+
+#app-root {
+  max-width: 55rem;
+  margin: auto;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: var(--font-weight-7);
+  letter-spacing: var(--font-letterspacing-2);
+}
+
+h1 {
+  background: var(--gradient-7) fixed;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: var(--font-letterspacing-3);
+}
+
+.button {
+  padding: var(--size-1) var(--size-3);
+  border-radius: var(--radius-round);
+  color: var(--accent-color);
+  border: var(--border-size-1) solid var(--accent-color-light);
+  background-color: transparent;
+  white-space: nowrap;
+  font-size: var(--font-size-0);
+}
+
+.button:not([disabled]):hover {
+  background: var(--accent-color-light);
+}
+
+.active {
+  border-color: var(--accent-color);
+  background-color: var(--accent-color-light);
+}
+
+.dark .button {
+  border-color: var(--gray-6);
+}
+
+.dark .active {
+  border-color: var(--accent-color);
 }

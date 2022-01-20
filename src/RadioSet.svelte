@@ -1,43 +1,42 @@
 <!-- src/RadioSet.svelte -->
 <script>
-  export let sets;
+  export let sets = [];
   export let selected;
+  export let title;
+  let open = false;
 </script>
 
-<section>
+<div class:open>
+  {#if title}
+    <h3>{title}</h3>
+  {/if}
   {#each sets as set}
-    <label class:active={selected === set.slug}>
-      <input type="radio" bind:group={selected} value={set.slug} />
+    <label class:active={selected === set.slug} class="button">
+      <input
+        type="radio"
+        bind:group={selected}
+        value={set.slug}
+        on:click={() => (open = !open)}
+      />
       {set.name}
     </label>
   {/each}
-</section>
+</div>
 
 <style>
-  section {
+  div {
     display: flex;
     flex-flow: row wrap;
-    gap: 1em;
-    font-size: 0.9rem;
+    align-items: center;
+    gap: var(--size-2);
+    border: var(--light-border);
+    border-radius: var(--radius-round);
+    padding: var(--size-2) var(--size-3);
   }
 
-  label {
-    padding: 0.5em 1.3em;
-    border-radius: 2em;
-    color: #0075fe;
-    padding: 3px 12px;
-    border: 1px solid #d7e6fc;
-    border-radius: 20px;
-    background-color: rgba(255, 255, 255, 0);
-    transition: background-color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
-      color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    white-space: nowrap;
-    font-size: 1em;
-    line-height: 1.1;
-  }
-
-  label:hover {
-    background: #d7e6fc;
+  h3 {
+    margin: 0;
+    font-size: var(--font-size-0);
   }
 
   [type="radio"] {
@@ -45,17 +44,37 @@
     position: absolute;
   }
 
-  label.active {
-    border-width: 1px;
-    border-color: #0075fe;
-    background-color: #e8effe;
-  }
+  @media (max-width: 860px) {
+    div {
+      display: grid;
+      grid-template: 1fr / auto auto;
+      border-color: transparent;
+      padding: var(--size-2) var(--size-1);
+    }
 
-  :global(body.dark) label:not(.active) {
-    color: #d7e6fc;
-  }
+    label {
+      grid-area: 1 / 2;
+    }
 
-  :global(body.dark) label:hover {
-    color: #0075fe;
+    .active {
+      z-index: 1;
+      padding-right: var(--size-2);
+    }
+
+    .open label:not(.active) {
+      grid-area: auto / 2;
+    }
+
+    .active::after {
+      content: "\25C0";
+      display: inline-block;
+      transform: scale(0.6, 0.8);
+      margin-left: var(--size-1);
+      transition: transform 0.3s;
+    }
+
+    .open .active::after {
+      transform: scale(0.8, 0.6) rotate(-90deg);
+    }
   }
 </style>

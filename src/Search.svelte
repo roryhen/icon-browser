@@ -23,14 +23,15 @@
   input {
     padding: 0.6em 0.9em;
     width: 100%;
-    border: 1px solid rgba(0, 0, 0, 0.3);
+    border: var(--light-border);
     outline: none;
     font-family: inherit;
     font-size: 0.9rem;
   }
 
-  input:focus {
-    border-color: rgba(0, 150, 250, 0.6);
+  input:focus,
+  :global(.dark) input:focus {
+    border-color: var(--accent-color);
   }
 
   label {
@@ -39,13 +40,13 @@
     height: 0;
   }
 
-  :global(body.dark) input {
-    background-color: rgba(0, 0, 0, 0.2);
-    color: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+  :global(.dark) input {
+    background-color: var(--gray-8);
+    border-color: var(--gray-6);
   }
 
-  :global(body.dark) input::placeholder {
-    color: rgba(255, 255, 255, 0.9);
+  :global(.dark) input,
+  :global(.dark) input::placeholder {
+    color: var(--gray-0);
   }
 </style>
