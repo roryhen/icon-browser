@@ -9,7 +9,7 @@
   import Paginate from "./Paginate.svelte";
   import Spinner from "./Spinner.svelte";
 
-  let baseUrl = "/icons";
+  let baseUrl = "https://storage.googleapis.com/g-icons";
   let currentSet = "materialiconsoutlined";
   let currentTheme = "light";
   let currentPage;
@@ -43,12 +43,6 @@
 
   function updatePage() {
     currentPage = 1;
-  }
-
-  if (__SNOWPACK_ENV__.MODE === "development") {
-    baseUrl = __SNOWPACK_ENV__.STORAGE_URL;
-  } else if (process.env.STORAGE_URL) {
-    baseUrl = process.env.STORAGE_URL;
   }
 
   $: filteredIcons = $icons.filter((icon) => {
@@ -144,5 +138,15 @@
     text-align: center;
     font-size: var(--font-size-4);
     margin: var(--size-4) 0;
+  }
+
+  .loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    place-content: center;
   }
 </style>

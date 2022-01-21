@@ -3,6 +3,3 @@
   [headers.values]
     Access-Control-Allow-Origin = "*"
     Vary = "Origin"
-
-[context.production]
-  environment = { STORAGE_URL = "https://storage.googleapis.com/g-icons", NODE_VERSION = "15" }
