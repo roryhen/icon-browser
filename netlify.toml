@@ -3,3 +3,6 @@
   [headers.values]
     Access-Control-Allow-Origin = "*"
     Vary = "Origin"
+
+[context.production]
+  environment = { NODE_VERSION = "17" }
