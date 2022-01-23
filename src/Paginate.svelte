@@ -180,16 +180,6 @@
   }
 
   @media (max-width: 430px) {
-    /* button:nth-child(2):not(.active),
-    .active + button ~ button:not(:last-child, .active) {
-      display: none;
-    }
-
-    button:not([disabled]) + .button,
-    .active:nth-child(2) + button + button {
-      display: block;
-    } */
-
     .labeled {
       padding: 0;
       width: 2.5rem;
