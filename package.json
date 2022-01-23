@@ -1,21 +1,18 @@
 {
   "scripts": {
-    "start": "snowpack dev",
-    "build": "snowpack build",
-    "test": "echo \"This template does not include a test runner by default.\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --host"
   },
   "devDependencies": {
-    "@snowpack/plugin-svelte": "^3.7.0",
-    "@snowpack/plugin-webpack": "^3.0.0",
-    "netlify-cli": "^8.8.2",
+    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.35",
     "prettier": "^2.3.1",
     "prettier-plugin-svelte": "^2.3.0",
-    "snowpack": "^3.8.8",
-    "svelte-paginate": "^0.0.1"
+    "vite": "^2.7.13"
   },
   "dependencies": {
-    "@sveltejs/svelte-virtual-list": "^3.0.1",
     "clipboard": "^2.0.8",
+    "open-props": "^1.1.6",
     "svelte": "^3.38.2"
   }
 }

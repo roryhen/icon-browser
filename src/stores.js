@@ -2,7 +2,7 @@ import { readable } from "svelte/store";
 
 export const icons = readable([], function start(set) {
   let index = 0;
-  fetch(`/icons/data.txt`)
+  fetch(`/data.txt`)
     .then((res) => res.text())
     .then((text) => {
       set(

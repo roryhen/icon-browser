@@ -1,14 +1,12 @@
 .DS_Store
-.snowpack
-/build
 node_modules
 
-/public/icons/*/**
+# Local build files
+/build
+/dist
+
+# Assets not bundling for prod
+/icons
 
 # Local Netlify folder
 .netlify
-
-public/icons/blue
-public/icons/dark
-public/icons/light
-public/icons/red

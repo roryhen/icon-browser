@@ -6,3 +6,8 @@
 
 [context.production]
   environment = { NODE_VERSION = "17" }
+
+[build]
+  base = "/"
+  publish = "dist/"
+  command = "npm run build"

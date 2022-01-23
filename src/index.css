@@ -29,6 +29,7 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: "Outfit", var(--font-sans);
+  font-weight: var(--font-weight-3);
   letter-spacing: var(--font-letterspacing-2);
   margin: 0;
 }
