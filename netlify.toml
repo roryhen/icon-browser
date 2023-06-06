@@ -5,7 +5,7 @@
     Vary = "Origin"
 
 [context.production]
-  environment = { NODE_VERSION = "17" }
+  environment = { NODE_VERSION = "18" }
 
 [build]
   base = "/"
