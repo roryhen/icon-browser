@@ -1,8 +1,8 @@
 <div class="ellipse">
-  <div />
-  <div />
-  <div />
-  <div />
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
 </div>
 
 <style>

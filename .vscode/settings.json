@@ -1,9 +1,0 @@
-{
-  "svelte.enable-ts-plugin": true,
-  "emmet.includeLanguages": {
-    "svelte": "html"
-  },
-  "[svelte]": {
-    "editor.defaultFormatter": "svelte.svelte-vscode"
-  }
-}
